@@ -8,9 +8,6 @@ function App() {
 		<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
 			<main className="p-8">
 				<Header />
-				<h1 className="text-primary font-bold text-2xl text-center my-4">
-					Generador de CSR
-				</h1>
 				<GenerateCSR />
 			</main>
 		</ThemeProvider>

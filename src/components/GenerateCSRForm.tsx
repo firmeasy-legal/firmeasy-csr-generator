@@ -1,12 +1,9 @@
 import { invoke } from "@tauri-apps/api/core";
 import { Button } from "./ui/button"
 import { useState } from "react";
+import { ZapIcon } from "lucide-react";
 
-type Props = {
-
-}
-
-export function GenerateCSR({ }: Props) {
+export function GenerateCSR() {
 	const [greetMsg, setGreetMsg] = useState("");
 
 	async function greet() {
@@ -15,8 +12,9 @@ export function GenerateCSR({ }: Props) {
 	}
 
 	return (
-		<Button onClick={() => greet()}>
-			Generar CSR {greetMsg}
+		<Button className="mx-auto flex px-6 my-6" onClick={() => greet()}>
+			<ZapIcon className="me-2 flex-shrink-0" />
+			<span className="block text-xl leading-6">Generar CSR</span>
 		</Button>
 	)
 }
