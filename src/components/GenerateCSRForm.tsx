@@ -42,6 +42,17 @@ export function GenerateCSR() {
 		setIsGenerating(false);
 	}
 
+	function downloadPrivateKey() {
+		if (!result) return;
+		const privateKeyBlob = new Blob([result.privateKeyPem ?? ""], { type: "text/plain" });
+		const privateKeyUrl = URL.createObjectURL(privateKeyBlob);
+		const privateKeyAnchor = document.createElement("a");
+		privateKeyAnchor.href = privateKeyUrl;
+		privateKeyAnchor.download = "private-key.pem";
+		privateKeyAnchor.click();
+		URL.revokeObjectURL(privateKeyUrl);
+	}
+
 	return (
 		<section>
 			<div className="flex justify-between">
@@ -58,8 +69,9 @@ export function GenerateCSR() {
 					<span className="block text-lg leading-6">Generar CSR</span>
 				</Button>
 				<Button
-					className="bg-[hsl(247,94%,19%)] dark:bg-[hsl(247,94%,30%)] hover:dark:dark:bg-[hsl(247,94%,25%)] flex px-6 mt-10 mb-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
+					className="bg-[hsl(247,94%,19%)] hover:bg-[hsl(247,94%,19%)]/90 dark:bg-[hsl(247,94%,30%)] hover:dark:dark:bg-[hsl(247,94%,25%)] flex px-6 mt-10 mb-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
 					disabled={!result}
+					onClick={downloadPrivateKey}
 				>
 					<KeyIcon className="w-5 h-5 me-2 flex-shrink-0" />
 					<span className="block text-lg leading-6">Descargar Private Key</span>
