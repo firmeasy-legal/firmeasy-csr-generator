@@ -31,9 +31,12 @@ export function GenerateCSR() {
 
 		if (!response) return;
 
+		const privateKeyPem = globalThis.atob(response.base64_private_key_pem);
+		const csrPem = globalThis.atob(response.base64_csr_pem);
+
 		setResult({
-			privateKeyPem: response.base64_private_key_pem,
-			csrPem: response.base64_csr_pem,
+			privateKeyPem,
+			csrPem,
 		});
 
 		setIsGenerating(false);
@@ -44,7 +47,7 @@ export function GenerateCSR() {
 			<div className="flex justify-between">
 				<Button
 					disabled={isGenerating}
-					className="flex px-6 mt-10 mb-6 dark:text-gray-100 hover:dark:text-gray-50"
+					className="flex px-6 mt-10 mb-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
 					onClick={generateCSR}
 				>
 					{
@@ -55,7 +58,7 @@ export function GenerateCSR() {
 					<span className="block text-lg leading-6">Generar CSR</span>
 				</Button>
 				<Button
-					className="bg-[hsl(247,94%,19%)] dark:bg-[hsl(247,94%,30%)] hover:dark:dark:bg-[hsl(247,94%,25%)] flex px-6 mt-10 mb-6 dark:text-gray-100 hover:dark:text-gray-50"
+					className="bg-[hsl(247,94%,19%)] dark:bg-[hsl(247,94%,30%)] hover:dark:dark:bg-[hsl(247,94%,25%)] flex px-6 mt-10 mb-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
 					disabled={!result}
 				>
 					<KeyIcon className="w-5 h-5 me-2 flex-shrink-0" />
@@ -63,9 +66,10 @@ export function GenerateCSR() {
 				</Button>
 			</div>
 			<Textarea
-				className="font-mono h-[60dvh] text-base resize-none overflow-y-auto"
+				className="font-mono h-[65dvh] text-base resize-none overflow-y-auto"
 				placeholder="Tu CSR aparecerá aquí"
 				value={result?.csrPem ?? ""}
+				onChange={() => { }}
 				contentEditable={false}
 			/>
 		</section>
