@@ -7,25 +7,25 @@ import { ThemeProvider } from "./components/theme-provider";
 import { ModeToggle } from "./components/mode-toggle";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+	const [greetMsg, setGreetMsg] = useState("");
+	const [name, setName] = useState("");
 
-  // async function greet() {
-  //   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  //   setGreetMsg(await invoke("greet", { name }));
-  // }
+	// async function greet() {
+	//   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
+	//   setGreetMsg(await invoke("greet", { name }));
+	// }
 
-  return (
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-      <ModeToggle />
-      <main className="container p-4">
-        <h1>Welcome to Tauri + React</h1>
+	return (
+		<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+			<ModeToggle />
+			<main className="container p-4">
+				<h1>Welcome to Tauri + React</h1>
 
-        <Button>Button</Button>
-        <p>{greetMsg}</p>
-      </main>
-    </ThemeProvider>
-  );
+				<Button>Button</Button>
+				<p>{greetMsg}</p>
+			</main>
+		</ThemeProvider>
+	);
 }
 
 export default App;
