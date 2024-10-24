@@ -18,9 +18,8 @@ function App() {
 
 	return (
 		<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-			<Header />
-			<ModeToggle />
-			<main className="container p-4">
+			<main className="p-8">
+				<Header />
 				<h1>Welcome to Tauri + React</h1>
 
 				<Button>Button</Button>
