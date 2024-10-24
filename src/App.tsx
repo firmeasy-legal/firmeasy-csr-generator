@@ -3,6 +3,8 @@ import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 import { Button } from "./components/ui/button";
+import { ThemeProvider } from "./components/theme-provider";
+import { ModeToggle } from "./components/mode-toggle";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -14,12 +16,15 @@ function App() {
   // }
 
   return (
-    <main className="container p-4">
-      <h1>Welcome to Tauri + React</h1>
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <ModeToggle />
+      <main className="container p-4">
+        <h1>Welcome to Tauri + React</h1>
 
-      <Button>Button</Button>
-      <p>{greetMsg}</p>
-    </main>
+        <Button>Button</Button>
+        <p>{greetMsg}</p>
+      </main>
+    </ThemeProvider>
   );
 }
 
