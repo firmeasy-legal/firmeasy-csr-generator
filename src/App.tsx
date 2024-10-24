@@ -5,6 +5,7 @@ import "./App.css";
 import { Button } from "./components/ui/button";
 import { ThemeProvider } from "./components/theme-provider";
 import { ModeToggle } from "./components/mode-toggle";
+import { Header } from "./components/Header";
 
 function App() {
 	const [greetMsg, setGreetMsg] = useState("");
@@ -17,6 +18,7 @@ function App() {
 
 	return (
 		<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+			<Header />
 			<ModeToggle />
 			<main className="container p-4">
 				<h1>Welcome to Tauri + React</h1>
