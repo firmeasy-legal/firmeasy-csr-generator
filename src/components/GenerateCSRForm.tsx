@@ -33,6 +33,7 @@ export function GenerateCSR() {
 			.catch((error: GenerationError) => {
 				toast.error("Ocurrió un error al intentar generar el CSR", {
 					description: error.message,
+					closeButton: true,
 				})
 				setIsGenerating(false);
 			})
@@ -49,6 +50,7 @@ export function GenerateCSR() {
 
 		toast.success("CSR generado correctamente", {
 			description: "Copia el CSR y luego descarga la Private Key",
+			closeButton: true,
 		});
 
 		setIsGenerating(false);
@@ -86,6 +88,10 @@ export function GenerateCSR() {
 					onClick={() => {
 						downloadPrivateKey()
 						setResult(null)
+						toast.success("Private Key descargada correctamente", {
+							description: "Se ha descargado la Private Key en formato PEM y se ha limpiado el CSR",
+							closeButton: true,
+						});
 					}}
 				>
 					<KeyIcon className="w-5 h-5 me-2 flex-shrink-0" />
