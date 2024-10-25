@@ -47,6 +47,10 @@ export function GenerateCSR() {
 			csrPem,
 		});
 
+		toast.success("CSR generado correctamente", {
+			description: "Copia el CSR y luego descarga la Private Key",
+		});
+
 		setIsGenerating(false);
 	}
 
