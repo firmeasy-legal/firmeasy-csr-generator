@@ -718,18 +718,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "firmeasy-csr-generator"
-version = "0.1.0"
-dependencies = [
- "openssl",
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
- "tauri-plugin-shell",
-]
-
-[[package]]
 name = "flate2"
 version = "1.0.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1063,6 +1051,18 @@ dependencies = [
  "libc",
  "system-deps",
  "winapi",
+]
+
+[[package]]
+name = "girasol-csr-generator"
+version = "0.1.0"
+dependencies = [
+ "openssl",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-shell",
 ]
 
 [[package]]
