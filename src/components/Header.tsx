@@ -69,11 +69,11 @@ export function Header({ }: Props) {
 			</nav>
 			<div className="flex items-center gap-1">
 				<a
-					href="https://github.com"
-					className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 p-2"
+					href="https://github.com/firmeasy-legal/firmeasy-csr-generator"
+					className="flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-2"
 					target="_blank"
 				>
-					<GithubIcon className="w-5 h-5" />
+					<GithubIcon className="block w-6 h-5" />
 				</a>
 				<ModeToggle />
 			</div>
