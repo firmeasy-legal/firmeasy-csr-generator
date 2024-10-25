@@ -69,10 +69,10 @@ export function GenerateCSR() {
 
 	return (
 		<section>
-			<div className="flex justify-between">
+			<div className="flex justify-between mb-6">
 				<Button
 					disabled={isGenerating}
-					className="flex px-6 mt-10 mb-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
+					className="flex px-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
 					onClick={generateCSR}
 				>
 					{
@@ -83,7 +83,7 @@ export function GenerateCSR() {
 					<span className="block text-lg leading-6">Generar CSR</span>
 				</Button>
 				<Button
-					className="bg-[hsl(247,94%,19%)] hover:bg-[hsl(247,94%,19%)]/90 dark:bg-[hsl(247,94%,30%)] hover:dark:dark:bg-[hsl(247,94%,25%)] flex px-6 mt-10 mb-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
+					className="bg-[hsl(247,94%,19%)] hover:bg-[hsl(247,94%,19%)]/90 dark:bg-[hsl(247,94%,30%)] hover:dark:dark:bg-[hsl(247,94%,25%)] flex px-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
 					disabled={!result}
 					onClick={() => {
 						downloadPrivateKey()

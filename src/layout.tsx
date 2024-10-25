@@ -14,7 +14,9 @@ export function Layout({ children }: Props) {
 		<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
 			<main className="p-8">
 				<Header />
-				{children}
+				<div className="pt-10">
+					{children}
+				</div>
 			</main>
 			<Toaster richColors />
 		</ThemeProvider>

@@ -1,18 +1,43 @@
+import { ReactNode } from "react"
 import { ModeToggle } from "./mode-toggle"
 import { useTheme } from "./theme-provider"
+import { Link } from "react-router-dom"
+import { InfoIcon, KeyRoundIcon } from "lucide-react"
+import { GithubIcon } from "./icons/github"
 
 type Props = {
 
 }
 
-function NavigationLink({ href, children }: { href: string, children: React.ReactNode }) {
+function NavigationLink({
+	href,
+	children,
+	external = false,
+}: {
+	href: string,
+	children: ReactNode,
+	external?: boolean,
+}) {
+	const className = "flex items-center gap-1 w-full text-center sm:w-auto text-base font-semibold transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 hover:underline underline-offset-4"
+	if (external) {
+		return (
+			<a
+				href={href}
+				target="_blank"
+				className={className}>
+				{children}
+			</a>
+		)
+	}
+
 	return (
-		<a
-			href={href}
-			target="_blank"
-			className="block w-full text-center sm:w-auto text-base font-semibold transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 hover:underline underline-offset-4">
+		<Link
+			to={href}
+			className={className}
+			viewTransition
+		>
 			{children}
-		</a>
+		</Link>
 	)
 }
 
@@ -29,12 +54,29 @@ export function Header({ }: Props) {
 				<img src="/verified-by-sunat.svg" className="h-7" alt="Verificados por SUNAT" />
 			</picture>
 			<nav className="flex-1 flex flex-wrap justify-evenly">
-				<NavigationLink href="https://girasol.pe/casos-de-uso">Casos de Uso</NavigationLink>
-				<NavigationLink href="https://girasol.pe/partners">Partners</NavigationLink>
-				<NavigationLink href="https://girasol.pe/soporte">Soporte</NavigationLink>
-				<NavigationLink href="https://firmeasy.legal">FirmEasy</NavigationLink>
+				<NavigationLink href="/about" >
+					<InfoIcon className="w-4 h-4" />
+					Acerca
+				</NavigationLink>
+				<NavigationLink href="/" >
+					<KeyRoundIcon className="w-4 h-4" />
+					Generar CSR
+				</NavigationLink>
+				<NavigationLink href="https://girasol.pe/casos-de-uso" external>Casos de Uso</NavigationLink>
+				<NavigationLink href="https://girasol.pe/partners" external>Partners</NavigationLink>
+				<NavigationLink href="https://girasol.pe/soporte" external>Soporte</NavigationLink>
+				<NavigationLink href="https://firmeasy.legal" external>FirmEasy</NavigationLink>
 			</nav>
-			<ModeToggle />
+			<div className="flex items-center gap-1">
+				<a
+					href="https://github.com"
+					className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 p-2"
+					target="_blank"
+				>
+					<GithubIcon className="w-5 h-5" />
+				</a>
+				<ModeToggle />
+			</div>
 		</header>
 	)
 }
