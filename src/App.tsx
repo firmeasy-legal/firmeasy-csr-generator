@@ -2,6 +2,7 @@ import "./App.css";
 import { ThemeProvider } from "./components/theme-provider";
 import { Header } from "./components/Header";
 import { GenerateCSR } from "./components/GenerateCSRForm";
+import { Toaster } from "sonner";
 
 function App() {
 	return (
@@ -10,6 +11,7 @@ function App() {
 				<Header />
 				<GenerateCSR />
 			</main>
+			<Toaster richColors />
 		</ThemeProvider>
 	);
 }

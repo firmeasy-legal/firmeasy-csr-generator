@@ -3,10 +3,15 @@ import { Button } from "./ui/button"
 import { KeyIcon, LoaderIcon, ZapIcon } from "lucide-react";
 import { Textarea } from "./ui/textarea";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type GeneratedPrivateKeyWithCSR = {
 	base64_private_key_pem: string,
 	base64_csr_pem: string,
+}
+
+type GenerationError = {
+	message: string,
 }
 
 type PrivateKeyWithCSR = {
@@ -18,14 +23,17 @@ export function GenerateCSR() {
 	//! useTransition doesn't work with Tauri yet
 	// const [isGenerating, startGeneration] = useTransition();
 	const [isGenerating, setIsGenerating] = useState(false);
+
 	const [result, setResult] = useState<PrivateKeyWithCSR | null>(null);
 
 	async function generateCSR() {
 		setIsGenerating(true);
 		await new Promise(resolve => setTimeout(resolve, 150));
 		const response = await invoke<GeneratedPrivateKeyWithCSR>("generate_csr")
-			.catch(error => {
-				console.error(error);
+			.catch((error: GenerationError) => {
+				toast.error("Ocurrió un error al intentar generar el CSR", {
+					description: error.message,
+				})
 				setIsGenerating(false);
 			})
 
