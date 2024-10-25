@@ -8,9 +8,13 @@ export function GenerateCSRPage() {
 	const [privateKeyWithCSR, setPrivateKeyWithCSR] = useState<PrivateKeyWithCSR | null>(null)
 
 	return (
-		<Layout>
-			<GenerateCSRForm setPrivateKeyWithCSR={setPrivateKeyWithCSR} />
+		<Layout className="grid gap-2 grid-cols-5">
+			<GenerateCSRForm
+				className="col-span-2"
+				setPrivateKeyWithCSR={setPrivateKeyWithCSR}
+			/>
 			<CSRGenerationResult
+				className="col-span-3"
 				privateKeyWithCSR={privateKeyWithCSR}
 				setPrivateKeyWithCSR={setPrivateKeyWithCSR}
 			/>

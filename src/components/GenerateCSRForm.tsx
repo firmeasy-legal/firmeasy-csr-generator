@@ -5,6 +5,7 @@ import { Textarea } from "./ui/textarea";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
 import { PrivateKeyWithCSR } from "@/models";
+import { cn } from "@/lib/utils";
 
 type GeneratedPrivateKeyWithCSR = {
 	base64_private_key_pem: string,
@@ -16,10 +17,12 @@ type GenerationError = {
 }
 
 type Props = {
+	className?: string,
 	setPrivateKeyWithCSR: Dispatch<SetStateAction<PrivateKeyWithCSR | null>>,
 }
 
 export function GenerateCSRForm({
+	className,
 	setPrivateKeyWithCSR,
 }: Props) {
 	//! useTransition doesn't work with Tauri yet
@@ -57,7 +60,7 @@ export function GenerateCSRForm({
 	}
 
 	return (
-		<section>
+		<form className={cn(className, "")}>
 			<div className="flex justify-between mb-6">
 				<Button
 					disabled={isGenerating}
@@ -72,6 +75,6 @@ export function GenerateCSRForm({
 					<span className="block text-lg leading-6">Generar CSR</span>
 				</Button>
 			</div>
-		</section>
+		</form>
 	)
 }

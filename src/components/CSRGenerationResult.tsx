@@ -6,11 +6,13 @@ import { toast } from "sonner";
 import { KeyIcon } from "lucide-react";
 
 type Props = {
+	className?: string,
 	privateKeyWithCSR: PrivateKeyWithCSR | null,
 	setPrivateKeyWithCSR: Dispatch<SetStateAction<PrivateKeyWithCSR | null>>,
 }
 
 export function CSRGenerationResult({
+	className,
 	privateKeyWithCSR,
 	setPrivateKeyWithCSR,
 }: Props) {
@@ -26,7 +28,7 @@ export function CSRGenerationResult({
 	}
 
 	return (
-		<>
+		<section className={className}>
 			<Button
 				className="bg-[hsl(247,94%,19%)] hover:bg-[hsl(247,94%,19%)]/90 dark:bg-[hsl(247,94%,30%)] hover:dark:dark:bg-[hsl(247,94%,25%)] flex px-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
 				disabled={!privateKeyWithCSR}
@@ -49,6 +51,6 @@ export function CSRGenerationResult({
 				onChange={() => { }}
 				contentEditable={false}
 			/>
-		</>
+		</section>
 	)
 }
