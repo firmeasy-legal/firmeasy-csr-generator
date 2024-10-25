@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "firmeasy-csr-generator",
-  "version": "0.1.0",
-  "identifier": "com.firmeasy-csr-generator.app",
+  "productName": "Girasol CSR Generator",
+  "version": "1.0.0",
+  "identifier": "com.girasol-csr-generator.app",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "devUrl": "http://localhost:1420",
