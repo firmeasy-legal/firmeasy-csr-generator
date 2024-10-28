@@ -1,7 +1,7 @@
 import { InfoIcon, KeyRoundIcon } from "lucide-react"
+import { Link, useLocation } from "react-router-dom"
 
 import { GithubIcon } from "./icons/github"
-import { Link } from "react-router-dom"
 import { ModeToggle } from "./mode-toggle"
 import { ReactNode } from "react"
 import { cn } from "@/lib/utils"
@@ -20,22 +20,28 @@ function NavigationLink({
 	children: ReactNode,
 	external?: boolean,
 }) {
-	const className = "flex items-center gap-1 w-full text-center sm:w-auto text-base font-semibold transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 hover:underline underline-offset-4"
+	const location = useLocation()
+
+	const className = "flex items-center gap-1 w-full text-center sm:w-auto text-base font-semibold transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 hover:underline underline-offset-4 user-select-none"
+
 	if (external) {
 		return (
 			<a
+				className={className}
 				href={href}
 				target="_blank"
-				className={className}>
+			>
 				{children}
 			</a>
 		)
 	}
 
+	const isActive = href === location.pathname
+
 	return (
 		<Link
 			to={href}
-			className={className}
+			className={cn(className, isActive ? "underline pointer-events-none" : "")}
 			viewTransition
 		>
 			{children}
