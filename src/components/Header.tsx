@@ -4,10 +4,11 @@ import { GithubIcon } from "./icons/github"
 import { Link } from "react-router-dom"
 import { ModeToggle } from "./mode-toggle"
 import { ReactNode } from "react"
+import { cn } from "@/lib/utils"
 import { useTheme } from "./theme-provider"
 
 type Props = {
-
+	className?: string,
 }
 
 function NavigationLink({
@@ -42,11 +43,13 @@ function NavigationLink({
 	)
 }
 
-export function Header({ }: Props) {
+export function Header({
+	className,
+}: Props) {
 	const { theme } = useTheme()
 
 	return (
-		<header className="w-full flex gap-4 items-center box-border" >
+		<header className={cn(className, "w-full flex gap-4 items-center box-border")} >
 			<a href="https://girasol.pe" target="_blank">
 				<img src="/logo-girasol.png" alt="Logo Girasol PE" className="block h-11 transition-[filter] duration-300" style={
 					theme !== "light" ? { filter: "brightness(0) invert(1)" } : {}} />

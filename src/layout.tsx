@@ -1,8 +1,8 @@
 import "./globals.css";
 
+import { Header } from "./components/Header";
 import { ReactNode } from "react";
 import { ThemeProvider } from "./components/theme-provider";
-import { Header } from "./components/Header";
 import { Toaster } from "sonner";
 import { cn } from "./lib/utils";
 
@@ -17,11 +17,9 @@ export function Layout({
 }: Props) {
 	return (
 		<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-			<main className="p-8">
-				<Header />
-				<div className={cn("pt-10", className)}>
-					{children}
-				</div>
+			<Header className="p-8 max-w-screen-xl mx-auto" />
+			<main className={cn("px-8 pt-2 pb-8 max-w-screen-xl mx-auto", className)}>
+				{children}
 			</main>
 			<Toaster richColors />
 		</ThemeProvider>

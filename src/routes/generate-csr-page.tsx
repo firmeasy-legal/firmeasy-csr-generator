@@ -8,7 +8,7 @@ export function GenerateCSRPage() {
 	const [privateKeyWithCSR, setPrivateKeyWithCSR] = useState<PrivateKeyWithCSR | null>(null)
 
 	return (
-		<Layout className="grid gap-10 grid-cols-6 items-center max-w-screen-lg mx-auto">
+		<Layout className="grid gap-10 grid-cols-6 items-center">
 			<div className="col-span-6">
 				<h1 className="text-primary font-bold text-2xl text-center mb-2">Generador de CSR</h1>
 				<p className="text-center">
