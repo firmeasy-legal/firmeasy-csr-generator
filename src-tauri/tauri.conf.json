@@ -13,10 +13,8 @@
     "windows": [
       {
         "title": "Girasol CSR Generator",
-        "width": 1100,
-        "height": 650,
-        "resizable": false,
-        "maximizable": false
+        "minWidth": 1100,
+        "minHeight": 730
       }
     ],
     "security": {

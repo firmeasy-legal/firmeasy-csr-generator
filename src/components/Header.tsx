@@ -1,9 +1,10 @@
-import { ReactNode } from "react"
-import { ModeToggle } from "./mode-toggle"
-import { useTheme } from "./theme-provider"
-import { Link } from "react-router-dom"
 import { InfoIcon, KeyRoundIcon } from "lucide-react"
+
 import { GithubIcon } from "./icons/github"
+import { Link } from "react-router-dom"
+import { ModeToggle } from "./mode-toggle"
+import { ReactNode } from "react"
+import { useTheme } from "./theme-provider"
 
 type Props = {
 
@@ -55,11 +56,11 @@ export function Header({ }: Props) {
 			</picture>
 			<nav className="flex-1 flex flex-wrap justify-evenly">
 				<NavigationLink href="/about" >
-					<InfoIcon className="w-4 h-4" />
+					<InfoIcon className="w-4 h-4 flex-shrink-0" />
 					Acerca
 				</NavigationLink>
 				<NavigationLink href="/" >
-					<KeyRoundIcon className="w-4 h-4" />
+					<KeyRoundIcon className="w-4 h-4 flex-shrink-0" />
 					Generar CSR
 				</NavigationLink>
 				<NavigationLink href="https://girasol.pe/casos-de-uso" external>Casos de Uso</NavigationLink>

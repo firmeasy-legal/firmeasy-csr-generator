@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
-import { LoaderIcon, ZapIcon } from "lucide-react";
+import { InfoIcon, LoaderIcon, ZapIcon } from "lucide-react";
 
 import { Button } from "./ui/button"
 import { Input } from "./ui/input";
@@ -222,6 +222,10 @@ export function GenerateCSRForm({
 					}
 					<span className="block text-lg leading-6">Generar CSR</span>
 				</Button>
+				<span className="block text-sm text-muted leading-5  text-pretty">
+					<InfoIcon className="inline w-4 h-4 flex-shrink-0 me-2" />
+					Al generar el CSR das fe de que los datos ingresados son correctos y que tienes autorización para solicitar un certificado de FirmEasy.
+				</span>
 			</form>
 		</Form>
 	)
