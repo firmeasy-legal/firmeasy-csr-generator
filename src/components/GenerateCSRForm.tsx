@@ -115,12 +115,12 @@ export function GenerateCSRForm({
 	return (
 		<Form {...form} >
 			<form className={cn(className, "space-y-6")} onSubmit={form.handleSubmit(onSubmit)}>
-				<div className="grid grid-cols-5 gap-6">
+				<div className="grid grid-cols-10 gap-6">
 					<FormField
 						control={form.control}
 						name="country"
 						render={({ field }) => (
-							<FormItem>
+							<FormItem className="col-span-2">
 								<FormLabel>País</FormLabel>
 								<FormControl>
 									<Input {...field} value="PE" readOnly />
@@ -133,7 +133,7 @@ export function GenerateCSRForm({
 						control={form.control}
 						name="region"
 						render={({ field }) => (
-							<FormItem className="col-span-4">
+							<FormItem className="col-span-8">
 								<FormLabel>Región</FormLabel>
 								<FormControl>
 									<Input {...field} placeholder="Lima" />
@@ -143,32 +143,34 @@ export function GenerateCSRForm({
 						)}
 					/>
 				</div>
-				<FormField
-					control={form.control}
-					name="province"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Provincia</FormLabel>
-							<FormControl>
-								<Input {...field} placeholder="Lima" />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="district"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Distrito</FormLabel>
-							<FormControl>
-								<Input {...field} placeholder="San Isidro" />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
+				<div className="grid grid-cols-2 gap-6">
+					<FormField
+						control={form.control}
+						name="province"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Provincia</FormLabel>
+								<FormControl>
+									<Input {...field} placeholder="Lima" />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={form.control}
+						name="district"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel>Distrito</FormLabel>
+								<FormControl>
+									<Input {...field} placeholder="San Isidro" />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
 				<FormField
 					control={form.control}
 					name="organization"

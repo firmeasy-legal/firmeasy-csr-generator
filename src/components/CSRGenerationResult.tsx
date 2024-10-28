@@ -1,9 +1,11 @@
+import { Dispatch, SetStateAction } from "react";
+
+import { Button } from "./ui/button";
+import { KeyIcon } from "lucide-react";
 import { PrivateKeyWithCSR } from "@/models";
 import { Textarea } from "./ui/textarea";
-import { Button } from "./ui/button";
-import { Dispatch, SetStateAction } from "react";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { KeyIcon } from "lucide-react";
 
 type Props = {
 	className?: string,
@@ -28,7 +30,7 @@ export function CSRGenerationResult({
 	}
 
 	return (
-		<section className={className}>
+		<section className={cn(className, "space-y-6 h-full")}>
 			<Button
 				className="bg-[hsl(247,94%,19%)] hover:bg-[hsl(247,94%,19%)]/90 dark:bg-[hsl(247,94%,30%)] hover:dark:dark:bg-[hsl(247,94%,25%)] flex px-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
 				disabled={!privateKeyWithCSR}
@@ -45,7 +47,7 @@ export function CSRGenerationResult({
 				<span className="block text-lg leading-6">Descargar Private Key</span>
 			</Button>
 			<Textarea
-				className="font-mono h-[65dvh] text-base resize-none overflow-y-auto"
+				className="font-mono h-full text-base resize-none overflow-y-auto"
 				placeholder="Tu CSR aparecerá aquí"
 				value={privateKeyWithCSR?.csrPem ?? ""}
 				onChange={() => { }}
