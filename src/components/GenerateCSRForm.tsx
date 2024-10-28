@@ -1,33 +1,34 @@
-import { invoke } from "@tauri-apps/api/core";
-import { Button } from "./ui/button"
-import { LoaderIcon, ZapIcon } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
-import { toast } from "sonner";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { LoaderIcon, ZapIcon } from "lucide-react";
+
+import { Button } from "./ui/button"
+import { Input } from "./ui/input";
 import { PrivateKeyWithCSR } from "@/models";
 import { cn } from "@/lib/utils";
-
-import { zodResolver } from "@hookform/resolvers/zod"
+import { invoke } from "@tauri-apps/api/core";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form"
-
 import { z } from "zod"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
-import { Input } from "./ui/input";
+import { zodResolver } from "@hookform/resolvers/zod"
 
 type CSRGenerationParams = {
 	country: string,
 	state: string,
 	locality: string,
+	organization: string,
 	organizationUnit: string,
 	commonName: string,
 }
 
 const formSchema = z.object({
 	country: z.string().length(2),
-	region: z.string(),
-	province: z.string(),
-	district: z.string(),
-	organizationUnit: z.string(),
-	commonName: z.string(),
+	region: z.string().min(1, "Este campo es requerido"),
+	province: z.string().min(1, "Este campo es requerido"),
+	district: z.string().min(1, "Este campo es requerido"),
+	organization: z.string().min(1, "Este campo es requerido"),
+	organizationUnit: z.string().min(1, "Este campo es requerido"),
+	softwareName: z.string().min(1, "Este campo es requerido"),
 })
 
 
@@ -60,15 +61,19 @@ export function GenerateCSRForm({
 			region: "",
 			province: "",
 			district: "",
+			organization: "",
 			organizationUnit: "",
-			commonName: ""
+			softwareName: ""
 		},
 	})
 
-	async function generateCSR() {
+	async function generateCSR(data: CSRGenerationParams) {
 		setIsGenerating(true);
 		await new Promise(resolve => setTimeout(resolve, 150));
-		const response = await invoke<GeneratedPrivateKeyWithCSR>("generate_csr")
+
+		const response = await invoke<GeneratedPrivateKeyWithCSR>("generate_csr", {
+			data
+		})
 			.catch((error: GenerationError) => {
 				toast.error("Ocurrió un error al intentar generar el CSR", {
 					description: error.message,
@@ -95,16 +100,22 @@ export function GenerateCSRForm({
 		setIsGenerating(false);
 	}
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
-		console.log(values)
+	async function onSubmit(values: z.infer<typeof formSchema>) {
+		const csrData: CSRGenerationParams = {
+			country: values.country,
+			state: `${values.region}-${values.province}`,
+			locality: values.district,
+			organization: values.organization,
+			organizationUnit: values.organizationUnit,
+			commonName: values.softwareName,
+		}
+		await generateCSR(csrData);
 	}
 
 	return (
 		<Form {...form} >
-			<form className={cn(className, "space-y-4")}>
-				<div className="grid grid-cols-3 gap-6">
+			<form className={cn(className, "space-y-6")} onSubmit={form.handleSubmit(onSubmit)}>
+				<div className="grid grid-cols-5 gap-6">
 					<FormField
 						control={form.control}
 						name="country"
@@ -122,7 +133,7 @@ export function GenerateCSRForm({
 						control={form.control}
 						name="region"
 						render={({ field }) => (
-							<FormItem className="col-span-2">
+							<FormItem className="col-span-4">
 								<FormLabel>Región</FormLabel>
 								<FormControl>
 									<Input {...field} placeholder="Lima" />
@@ -160,6 +171,19 @@ export function GenerateCSRForm({
 				/>
 				<FormField
 					control={form.control}
+					name="organization"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Organización</FormLabel>
+							<FormControl>
+								<Input {...field} placeholder="Girasol E.I.R.L" />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
 					name="organizationUnit"
 					render={({ field }) => (
 						<FormItem>
@@ -173,10 +197,10 @@ export function GenerateCSRForm({
 				/>
 				<FormField
 					control={form.control}
-					name="commonName"
+					name="softwareName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Nombre Común</FormLabel>
+							<FormLabel>Nombre del Software</FormLabel>
 							<FormControl>
 								<Input {...field} placeholder="FirmEasy" />
 							</FormControl>
@@ -187,8 +211,7 @@ export function GenerateCSRForm({
 				<Button
 					type="submit"
 					disabled={isGenerating}
-					className="flex px-6 dark:text-gray-100 hover:dark:text-gray-50 select-none"
-					onClick={generateCSR}
+					className="flex px-6 dark:text-gray-100 hover:dark:text-gray-50 select-none w-full"
 				>
 					{
 						isGenerating

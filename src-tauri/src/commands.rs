@@ -1,5 +1,12 @@
-use openssl::{base64, hash::MessageDigest, pkey::PKey, rsa::Rsa, x509::X509ReqBuilder};
-use serde::Serialize;
+use openssl::{
+    base64,
+    hash::MessageDigest,
+    nid::Nid,
+    pkey::PKey,
+    rsa::Rsa,
+    x509::{X509NameBuilder, X509ReqBuilder},
+};
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize)]
 pub struct PrivateKeyWithCSR {
@@ -12,8 +19,19 @@ pub struct GenerationError {
     message: String,
 }
 
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CSRGenerationParams {
+    country: String,
+    state: String,
+    locality: String,
+    organization: String,
+    organization_unit: String,
+    common_name: String,
+}
+
 #[tauri::command]
-pub fn generate_csr() -> Result<PrivateKeyWithCSR, GenerationError> {
+pub fn generate_csr(data: CSRGenerationParams) -> Result<PrivateKeyWithCSR, GenerationError> {
     let key_pair_res = Rsa::generate(2048);
     if let Err(_) = key_pair_res {
         let error = GenerationError {
@@ -48,6 +66,81 @@ pub fn generate_csr() -> Result<PrivateKeyWithCSR, GenerationError> {
     if let Err(_) = assigned_public_key_res {
         let error = GenerationError {
             message: "No se pudo asignar la llave pública al CSR".to_string(),
+        };
+        return Err(error);
+    }
+
+    let subject_name_builder_res = X509NameBuilder::new();
+
+    if let Err(_) = subject_name_builder_res {
+        let error = GenerationError {
+            message: "No se pudo crear el generador de nombres".to_string(),
+        };
+        return Err(error);
+    }
+
+    let mut subject_name_builder = subject_name_builder_res.unwrap();
+
+    let add_country_res = subject_name_builder.append_entry_by_nid(Nid::COUNTRYNAME, &data.country);
+    if let Err(_) = add_country_res {
+        let error = GenerationError {
+            message: "No se pudo agregar el país al CSR".to_string(),
+        };
+        return Err(error);
+    }
+
+    let add_state_res =
+        subject_name_builder.append_entry_by_nid(Nid::STATEORPROVINCENAME, &data.state);
+    if let Err(_) = add_state_res {
+        let error = GenerationError {
+            message: "No se pudo agregar el estado al CSR".to_string(),
+        };
+        return Err(error);
+    }
+
+    let add_locality_res =
+        subject_name_builder.append_entry_by_nid(Nid::LOCALITYNAME, &data.locality);
+    if let Err(_) = add_locality_res {
+        let error = GenerationError {
+            message: "No se pudo agregar la localidad al CSR".to_string(),
+        };
+        return Err(error);
+    }
+
+    let add_organization_res =
+        subject_name_builder.append_entry_by_nid(Nid::ORGANIZATIONNAME, &data.organization);
+
+    if let Err(_) = add_organization_res {
+        let error = GenerationError {
+            message: "No se pudo agregar la organización al CSR".to_string(),
+        };
+        return Err(error);
+    }
+
+    let add_organization_unit_res = subject_name_builder
+        .append_entry_by_nid(Nid::ORGANIZATIONALUNITNAME, &data.organization_unit);
+    if let Err(_) = add_organization_unit_res {
+        let error = GenerationError {
+            message: "No se pudo agregar la unidad organizacional al CSR".to_string(),
+        };
+        return Err(error);
+    }
+
+    let add_common_name_res =
+        subject_name_builder.append_entry_by_nid(Nid::COMMONNAME, &data.common_name);
+    if let Err(_) = add_common_name_res {
+        let error = GenerationError {
+            message: "No se pudo agregar el nombre común al CSR".to_string(),
+        };
+        return Err(error);
+    }
+
+    let subject_name = subject_name_builder.build();
+
+    let add_subject_name_res = csr_builder.set_subject_name(&subject_name);
+    if let Err(_) = add_subject_name_res {
+        let error = GenerationError {
+            message: "No se pudo agregar el nombre del sujeto al CSR".to_string(),
         };
         return Err(error);
     }
