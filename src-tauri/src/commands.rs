@@ -27,6 +27,8 @@ pub struct CSRGenerationParams {
     locality: String,
     organization: String,
     organization_unit: String,
+    street: String,
+    email: String,
     common_name: String,
 }
 
@@ -122,6 +124,23 @@ pub fn generate_csr(data: CSRGenerationParams) -> Result<PrivateKeyWithCSR, Gene
     if let Err(_) = add_organization_unit_res {
         let error = GenerationError {
             message: "No se pudo agregar la unidad organizacional al CSR".to_string(),
+        };
+        return Err(error);
+    }
+
+    let add_street_res = subject_name_builder.append_entry_by_nid(Nid::STREETADDRESS, &data.street);
+    if let Err(_) = add_street_res {
+        let error = GenerationError {
+            message: "No se pudo agregar la calle al CSR".to_string(),
+        };
+        return Err(error);
+    }
+
+    let add_email_res =
+        subject_name_builder.append_entry_by_nid(Nid::PKCS9_EMAILADDRESS, &data.email);
+    if let Err(_) = add_email_res {
+        let error = GenerationError {
+            message: "No se pudo agregar el email al CSR".to_string(),
         };
         return Err(error);
     }

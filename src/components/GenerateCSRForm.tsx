@@ -18,6 +18,8 @@ type CSRGenerationParams = {
 	locality: string,
 	organization: string,
 	organizationUnit: string,
+	street: string,
+	email: string,
 	commonName: string,
 }
 
@@ -28,7 +30,9 @@ const formSchema = z.object({
 	district: z.string().min(1, "Este campo es requerido"),
 	organization: z.string().min(1, "Este campo es requerido"),
 	organizationUnit: z.string().min(1, "Este campo es requerido"),
-	softwareName: z.string().min(1, "Este campo es requerido"),
+	street: z.string().min(1, "Este campo es requerido"),
+	email: z.string().email("El email ingresado no es válido"),
+	commonName: z.string().min(1, "Este campo es requerido"),
 })
 
 
@@ -63,7 +67,9 @@ export function GenerateCSRForm({
 			district: "",
 			organization: "",
 			organizationUnit: "",
-			softwareName: ""
+			street: "",
+			email: "",
+			commonName: "",
 		},
 	})
 
@@ -107,7 +113,9 @@ export function GenerateCSRForm({
 			locality: values.district,
 			organization: values.organization,
 			organizationUnit: values.organizationUnit,
-			commonName: values.softwareName,
+			street: values.street,
+			email: values.email,
+			commonName: values.commonName,
 		}
 		await generateCSR(csrData);
 	}
@@ -131,9 +139,24 @@ export function GenerateCSRForm({
 					/>
 					<FormField
 						control={form.control}
-						name="region"
+						name="commonName"
 						render={({ field }) => (
 							<FormItem className="col-span-8">
+								<FormLabel>Nombre Común</FormLabel>
+								<FormControl>
+									<Input {...field} placeholder="FirmEasy" />
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+				</div>
+				<div className="grid grid-cols-3 gap-6">
+					<FormField
+						control={form.control}
+						name="region"
+						render={({ field }) => (
+							<FormItem>
 								<FormLabel>Región</FormLabel>
 								<FormControl>
 									<Input {...field} placeholder="Lima" />
@@ -142,8 +165,6 @@ export function GenerateCSRForm({
 							</FormItem>
 						)}
 					/>
-				</div>
-				<div className="grid grid-cols-2 gap-6">
 					<FormField
 						control={form.control}
 						name="province"
@@ -178,7 +199,7 @@ export function GenerateCSRForm({
 						<FormItem>
 							<FormLabel>Organización</FormLabel>
 							<FormControl>
-								<Input {...field} placeholder="Girasol E.I.R.L" />
+								<Input {...field} placeholder="Girasol S.C.R.L" />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -199,12 +220,25 @@ export function GenerateCSRForm({
 				/>
 				<FormField
 					control={form.control}
-					name="softwareName"
+					name="street"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Nombre del Software</FormLabel>
+							<FormLabel>Dirección</FormLabel>
 							<FormControl>
-								<Input {...field} placeholder="FirmEasy" />
+								<Input {...field} placeholder="Av. Javier Prado Este 1234" />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name="email"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Email</FormLabel>
+							<FormControl>
+								<Input {...field} type="email" placeholder="usuario@dominio.com" />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
