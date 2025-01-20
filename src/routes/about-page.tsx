@@ -30,7 +30,7 @@ export function AboutPage() {
 
 			<div className="mb-6">
 				<p className="font-semibold mb-1">Descripción </p>
-				<p className="text-balance mb-2">Esta es una aplicación de código abierto de desarrollada por Girasol PE E.I.R.L que facilita a sus clientes para generar un CSR para solicitar un certificado de agente automatizado de la autoridad de certificación FirmEasy.</p>
+				<p className="text-balance mb-2">Esta es una aplicación de código abierto desarrollada por Girasol PE S.C.R.L., identificada con el RUC 20605042512, diseñada para facilitar a sus clientes la generación de un CSR para solicitar un certificado de agente automatizado emitido por la autoridad de certificación FirmEasy.</p>
 				<p className="text-balance">
 					Esta aplicación no envía ninguna información a servidores externos.
 				</p>
