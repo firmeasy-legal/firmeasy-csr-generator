@@ -15,13 +15,13 @@ export function GenerateCSRPage() {
 					Genera un CSR para solicitar un certificado de agente automatizado de la autoridad de certificación FirmEasy
 				</p>
 			</div>
-			<div className="flex gap-12 justify-between">
+			<div className="flex gap-10 justify-between">
 				<GenerateCSRForm
 					className="flex-grow-0"
 					setPrivateKeyWithCSR={setPrivateKeyWithCSR}
 				/>
 				<CSRGenerationResult
-					className="col-span-4"
+					className="flex-shrink-0"
 					privateKeyWithCSR={privateKeyWithCSR}
 					setPrivateKeyWithCSR={setPrivateKeyWithCSR}
 				/>
