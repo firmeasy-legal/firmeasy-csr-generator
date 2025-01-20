@@ -4,6 +4,8 @@ import { Button } from "./ui/button";
 import { PrivateKeyWithCSR } from "@/models";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { useMemo } from "react";
+import { format } from "date-fns";
 
 type Props = {
 	className?: string,
@@ -18,13 +20,18 @@ export function CSRGenerationResult({
 	setCSRIsDownloaded,
 	setPrivateKeyIsDownloaded,
 }: Props) {
+	const formattedDownloadName = useMemo(
+		() => format(new Date(), "yyyyMMddHHmmss"),
+		[privateKeyWithCSR]
+	);
+
 	function downloadPrivateKey() {
 		if (!privateKeyWithCSR) return;
 		const privateKeyBlob = new Blob([privateKeyWithCSR.privateKeyPem.trim() ?? ""], { type: "application/x-pem-file" });
 		const privateKeyUrl = URL.createObjectURL(privateKeyBlob);
 		const privateKeyAnchor = document.createElement("a");
 		privateKeyAnchor.href = privateKeyUrl;
-		privateKeyAnchor.download = "private-key.key";
+		privateKeyAnchor.download = `${formattedDownloadName}-private.key`;
 		privateKeyAnchor.click();
 		URL.revokeObjectURL(privateKeyUrl);
 	}
@@ -35,7 +42,7 @@ export function CSRGenerationResult({
 		const csrUrl = URL.createObjectURL(csrBlob);
 		const csrAnchor = document.createElement("a");
 		csrAnchor.href = csrUrl;
-		csrAnchor.download = "csr.csr";
+		csrAnchor.download = `${formattedDownloadName}-csr.csr`;
 		csrAnchor.click();
 		URL.revokeObjectURL(csrUrl);
 	}

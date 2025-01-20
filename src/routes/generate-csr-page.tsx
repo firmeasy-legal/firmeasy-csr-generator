@@ -2,7 +2,7 @@ import { CSRGenerationResult } from "@/components/CSRGenerationResult";
 import { GenerateCSRForm } from "@/components/GenerateCSRForm";
 import { Layout } from "@/layout";
 import { PrivateKeyWithCSR } from "@/models";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const INITIAL_DOWNLOADED_STATUS = {
 	privateKey: false,
@@ -30,6 +30,12 @@ export function GenerateCSRPage() {
 	const resetDownloadedStatus = () => {
 		setDownloadedStatus(INITIAL_DOWNLOADED_STATUS)
 	}
+
+	useEffect(() => {
+		if (downloadedStatus.privateKey && downloadedStatus.csr) {
+			setPrivateKeyWithCSR(null)
+		}
+	}, [downloadedStatus])
 
 	return (
 		<Layout>
