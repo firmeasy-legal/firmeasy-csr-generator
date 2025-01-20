@@ -8,22 +8,24 @@ export function GenerateCSRPage() {
 	const [privateKeyWithCSR, setPrivateKeyWithCSR] = useState<PrivateKeyWithCSR | null>(null)
 
 	return (
-		<Layout className="grid gap-10 grid-cols-6 items-center">
-			<div className="col-span-6">
+		<Layout>
+			<div className="mb-10">
 				<h1 className="text-primary font-bold text-2xl text-center mb-2">Generador de CSR</h1>
 				<p className="text-center">
 					Genera un CSR para solicitar un certificado de agente automatizado de la autoridad de certificación FirmEasy
 				</p>
 			</div>
-			<GenerateCSRForm
-				className="col-span-2"
-				setPrivateKeyWithCSR={setPrivateKeyWithCSR}
-			/>
-			<CSRGenerationResult
-				className="col-span-4"
-				privateKeyWithCSR={privateKeyWithCSR}
-				setPrivateKeyWithCSR={setPrivateKeyWithCSR}
-			/>
+			<div className="flex gap-12 justify-between">
+				<GenerateCSRForm
+					className="flex-grow-0"
+					setPrivateKeyWithCSR={setPrivateKeyWithCSR}
+				/>
+				<CSRGenerationResult
+					className="col-span-4"
+					privateKeyWithCSR={privateKeyWithCSR}
+					setPrivateKeyWithCSR={setPrivateKeyWithCSR}
+				/>
+			</div>
 		</Layout>
 	)
 }

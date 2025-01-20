@@ -17,8 +17,8 @@ export function Layout({
 }: Props) {
 	return (
 		<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-			<Header className="p-8 max-w-screen-xl mx-auto" />
-			<main className={cn("px-8 pt-2 pb-8 max-w-screen-xl mx-auto", className)}>
+			<Header className="p-8 max-w-screen-lg mx-auto" />
+			<main className={cn("px-8 pt-2 pb-8 max-w-screen-lg mx-auto", className)}>
 				{children}
 			</main>
 			<Toaster richColors />
