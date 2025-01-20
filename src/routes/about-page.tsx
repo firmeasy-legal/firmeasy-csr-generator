@@ -9,7 +9,7 @@ export function AboutPage() {
 
 			<p className="">
 				<span className="font-semibold">Versión: </span>
-				<span>1.0.0</span>
+				<span>1.1.0</span>
 			</p>
 
 			<p className="">
