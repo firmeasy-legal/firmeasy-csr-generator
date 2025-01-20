@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { FileSignatureIcon, InfoIcon, KeyIcon } from "lucide-react";
 
 import { Button } from "./ui/button";
@@ -9,13 +8,15 @@ import { toast } from "sonner";
 type Props = {
 	className?: string,
 	privateKeyWithCSR: PrivateKeyWithCSR | null,
-	setPrivateKeyWithCSR: Dispatch<SetStateAction<PrivateKeyWithCSR | null>>,
+	setPrivateKeyIsDownloaded: () => void,
+	setCSRIsDownloaded: () => void,
 }
 
 export function CSRGenerationResult({
 	className,
 	privateKeyWithCSR,
-	setPrivateKeyWithCSR,
+	setCSRIsDownloaded,
+	setPrivateKeyIsDownloaded,
 }: Props) {
 	function downloadPrivateKey() {
 		if (!privateKeyWithCSR) return;
@@ -54,7 +55,7 @@ export function CSRGenerationResult({
 						disabled={!privateKeyWithCSR}
 						onClick={() => {
 							downloadPrivateKey()
-							setPrivateKeyWithCSR(null)
+							setPrivateKeyIsDownloaded()
 							toast.success("Private Key descargada correctamente", {
 								description: "Se ha descargado la Private Key en formato PEM",
 								closeButton: true,
@@ -69,7 +70,7 @@ export function CSRGenerationResult({
 						disabled={!privateKeyWithCSR}
 						onClick={() => {
 							downloadCSR()
-							setPrivateKeyWithCSR(null)
+							setCSRIsDownloaded()
 							toast.success("CSR descargado correctamente", {
 								description: "Se ha descargado el CSR en formato PEM",
 								closeButton: true,

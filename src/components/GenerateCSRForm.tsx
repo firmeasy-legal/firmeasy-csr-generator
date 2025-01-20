@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { InfoIcon, LoaderIcon, ZapIcon } from "lucide-react";
 
@@ -11,6 +11,11 @@ import { toast } from "sonner";
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
+
+type DownloadedStatus = {
+	privateKey: boolean,
+	csr: boolean,
+}
 
 type CSRGenerationParams = {
 	country: string,
@@ -47,13 +52,24 @@ type GenerationError = {
 
 type Props = {
 	className?: string,
+	privateKeyWithCSR: PrivateKeyWithCSR | null,
 	setPrivateKeyWithCSR: Dispatch<SetStateAction<PrivateKeyWithCSR | null>>,
+	downloadedStatus: DownloadedStatus,
+	resetDownloadedStatus: () => void,
 }
 
 export function GenerateCSRForm({
 	className,
+	privateKeyWithCSR,
 	setPrivateKeyWithCSR,
+	downloadedStatus,
+	resetDownloadedStatus,
 }: Props) {
+	const canGenerateNewCSR = useMemo(
+		() => downloadedStatus.privateKey && downloadedStatus.csr,
+		[downloadedStatus]
+	)
+
 	//! useTransition doesn't work with Tauri yet
 	// const [isGenerating, startGeneration] = useTransition();
 	const [isGenerating, setIsGenerating] = useState(false);
@@ -99,7 +115,7 @@ export function GenerateCSRForm({
 		});
 
 		toast.success("CSR generado correctamente", {
-			description: "Copia el CSR y luego descarga la Private Key",
+			description: "Debes descargar la Private Key y el CSR antes de volver a generar un CSR",
 			closeButton: true,
 		});
 
@@ -118,6 +134,7 @@ export function GenerateCSRForm({
 			commonName: values.commonName,
 		}
 		await generateCSR(csrData);
+		resetDownloadedStatus();
 	}
 
 	return (
@@ -246,7 +263,7 @@ export function GenerateCSRForm({
 				/>
 				<Button
 					type="submit"
-					disabled={isGenerating}
+					disabled={isGenerating || (Boolean(privateKeyWithCSR) && !canGenerateNewCSR)}
 					className="flex px-6 dark:text-gray-100 hover:dark:text-gray-50 select-none w-full"
 				>
 					{
